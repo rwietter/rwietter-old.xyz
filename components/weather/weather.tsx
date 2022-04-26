@@ -26,11 +26,9 @@ const fetcher = () => fetch(API_WEATHER).then((res) => res.json());
 export const WeatherConditions = () => {
   const { data, error } = useSWR(API_WEATHER, fetcher, { refreshInterval: 20000 });
 
-  if (error || !data) return <div>Failed to load</div>;
+  if (error || !data) return <div>...</div>;
 
   const [weather] = data;
-
-  console.log(weather);
 
   return (
     <div>
