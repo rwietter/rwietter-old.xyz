@@ -18,5 +18,6 @@ export const Container = styled('header', {
     width: '13rem',
     height: '100vh',
     flexDirection: 'column',
+    borderRight: '2px solid $background',
   },
 });

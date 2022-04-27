@@ -21,6 +21,7 @@ export const ManuBarWrapper = styled('aside', {
     height: '100vh',
     padding: '0.8rem 0',
     position: 'fixed',
+    borderLeft: '2px solid $background',
     right: '0',
     width: '3.5rem',
   },

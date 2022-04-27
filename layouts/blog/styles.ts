@@ -11,11 +11,12 @@ export const LayoutCSS = styled('div', {
   width: '100%',
   margin: '0 auto',
   paddingTop: '5.01rem',
-  paddingBottom: '3.5rem',
+  paddingBottom: '3.1rem',
   paddingLeft: '0',
 
   '@bp5': {
     paddingLeft: '13rem',
     paddingTop: '0',
+    paddingBottom: '0.6rem',
   },
 });
