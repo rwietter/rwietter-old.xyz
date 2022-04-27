@@ -16,6 +16,7 @@ export const CardContainer = styled('div', {
 
   '&:hover': {
     background: '$mediumBackgroundHover',
+    color: '$textHighlight',
   },
 });
 
@@ -39,12 +40,12 @@ export const CardInformations = styled('div', {
   '#title': {
     justifySelf: 'flex-start',
     fontWeight: '900',
-    fontSize: 'clamp(1.2rem, 3vw, 1.6rem)',
+    fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
   },
 
   '#description': {
     fontWeight: '300',
-    fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+    fontSize: 'clamp(0.86rem, 2vw, 1.2rem)',
     paddingTop: '0.5rem',
   },
 });

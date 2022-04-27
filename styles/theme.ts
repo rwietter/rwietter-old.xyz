@@ -12,7 +12,7 @@ const {
     colors: {
       background: '#08070b',
       mediumBackground: '#13141c',
-      mediumBackgroundHover: '#1B1C24',
+      mediumBackgroundHover: '#202230',
       gradient:
         'linear-gradient(90deg, #ffbe0b, #fb5607, #ff006e, #8257e5, #3a86ff );',
       highlight145: 'linear-gradient(145deg, #8257e5, #c1b);',
@@ -29,6 +29,7 @@ const {
       primaryHover: '#A6F2E4',
       secondary: '#8257e5',
       tertiary: '#eea3b4',
+      textHighlight: '#fb377f',
       separator: '#1B1B1E',
       tooltip: '#ff006e',
       buttonThumb: '#F4F4F6',
@@ -113,6 +114,7 @@ const { theme: lightTheme } = createStitches({
       gray400: '#C9C9CF',
       weakColorText: '#555555',
       primary: '#3a86ff',
+      textHighlight: '#fb377f',
       primaryHover: '#7AAEFF',
       secondary: '#8257e5',
       tertiary: '#b15cdd',

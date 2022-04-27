@@ -5,14 +5,17 @@ export const BlogContainerPosts = styled('div', {
 });
 
 export const LayoutCSS = styled('div', {
-  background: 'var(--background)',
+  background: '$background',
   minHeight: '100vh',
   transition: 'background 0.35s, color 0.35s ease',
   width: '100%',
   margin: '0 auto',
+  paddingTop: '5.01rem',
+  paddingBottom: '3.5rem',
   paddingLeft: '0',
 
   '@bp5': {
     paddingLeft: '13rem',
+    paddingTop: '0',
   },
 });

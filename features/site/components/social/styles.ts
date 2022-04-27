@@ -17,7 +17,7 @@ export const SocialContainer = styled('div', {
     transition: 'color 0.3s ease',
 
     '&:hover': {
-      color: '$secondary',
+      color: '$primary',
     },
   },
   'a + a': {

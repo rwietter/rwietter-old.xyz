@@ -6,7 +6,7 @@ export const Container = styled('header', {
   alignItems: 'center',
   justifyContent: 'space-between',
   background: '$mediumBackground',
-  height: '4rem',
+  height: '5rem',
   position: 'fixed',
   padding: '$4 $2',
   zIndex: 4,
