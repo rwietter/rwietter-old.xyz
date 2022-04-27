@@ -1,6 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React from 'react';
 import { Card } from '../article-card';
+import { ArticlesContainer } from './styles';
 
 const Articles = ({ articles }: any) => {
   const leftArticlesCount = Math.ceil(articles?.length / 5);
@@ -10,28 +11,26 @@ const Articles = ({ articles }: any) => {
   const rightArticles = articles?.slice(leftArticlesCount, articles.length);
 
   return (
-    <div>
-      <div className="uk-child-width-1-2" data-uk-grid>
+    <ArticlesContainer>
+      <div>
+        {leftArticles?.map((article: any) => (
+          <Card
+            article={article}
+            key={`article__${article.attributes.slug}`}
+          />
+        ))}
+      </div>
+      <div>
         <div>
-          {leftArticles?.map((article: any) => (
+          {rightArticles?.map((article: any) => (
             <Card
               article={article}
               key={`article__${article.attributes.slug}`}
             />
           ))}
         </div>
-        <div>
-          <div className="uk-child-width-1-2@m uk-grid-match" data-uk-grid>
-            {rightArticles?.map((article: any) => (
-              <Card
-                article={article}
-                key={`article__${article.attributes.slug}`}
-              />
-            ))}
-          </div>
-        </div>
       </div>
-    </div>
+    </ArticlesContainer>
   );
 };
 

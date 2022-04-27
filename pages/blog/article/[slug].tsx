@@ -2,9 +2,13 @@ import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import { useQuery } from '@apollo/react-hooks';
 import Image from 'next/image';
-import ARTICLE_QUERY from '../../../queries/article/article';
+import ARTICLE_QUERY from 'queries/article/article';
+import markdownDark from '../../../styles/github-markdown-css-dark.module.css';
+import markdownLight from '../../../styles/github-markdown-css-light.module.css';
+import { useThemeStore } from '../../../store/switch-theme';
 
 const ArticleItem = () => {
+  const { theme } = useThemeStore() as any;
   const router = useRouter() as unknown as {
     query: { slug: string[] | string };
   };
@@ -33,7 +37,11 @@ const ArticleItem = () => {
 
       <div className="uk-section">
         <div className="uk-container uk-container-small">
-          <ReactMarkdown>{articles.attributes.content}</ReactMarkdown>
+          <ReactMarkdown
+            className={theme === 'light' ? markdownDark['markdown-body'] : markdownLight['markdown-body']}
+          >
+            {articles.attributes.content}
+          </ReactMarkdown>
           <p>
             <span data-att="MMM Do YYYY">
               {articles.attributes.published_at}

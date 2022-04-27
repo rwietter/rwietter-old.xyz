@@ -21,9 +21,9 @@ const API_LAST_FM = `//ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&us
 const fetcher = () => fetch(API_LAST_FM).then((res) => res.json());
 
 export const LastFMTrack = () => {
-  const { data, error } = useSWR(API_LAST_FM, fetcher, { refreshInterval: 10000 });
+  const { data, error } = useSWR(API_LAST_FM, fetcher, { refreshInterval: 120000 });
 
-  if (error) return <div>...</div>;
+  if (error) return <div> </div>;
 
   const track: TrackProps = data?.recenttracks?.track[0];
 

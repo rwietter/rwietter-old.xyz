@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Articles } from '../../../components/articles';
-import Query from '../../../components/query';
-import CATEGORY_ARTICLES_QUERY from '../../../queries/category/articles';
+import { Articles } from 'components/articles';
+import Query from 'components/query';
+import CATEGORY_ARTICLES_QUERY from 'queries/category/articles';
 
 const Category = () => {
   const router = useRouter();
@@ -14,8 +14,8 @@ const Category = () => {
         if (categories.data.length) {
           return (
             <div>
-              <div className="uk-section">
-                <div className="uk-container uk-container-large">
+              <div>
+                <div>
                   <h1>{categories.data[0].attributes.name}</h1>
                   <Articles articles={categories.data[0].attributes.articles.data} />
                 </div>

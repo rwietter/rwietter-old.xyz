@@ -1,29 +1,35 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import {
+  CardContainer, CardImage, CardInformations, CardImageContainer,
+} from './styles';
 
 const Card = ({ article }: any) => (
   <Link href={`/blog/article/${article.attributes.slug}`} passHref>
-    <div className="uk-card uk-card-muted uk-cursor-pointer">
-      <div className="uk-card-media-top">
-        <Image
+    <CardContainer>
+      <CardImageContainer>
+        <CardImage
           src={article.attributes.image.data.attributes.url}
           alt={article.attributes.image.url}
-          layout="responsive"
-          width={100}
-          height={50}
+          layout="fixed"
+          width={70}
+          height={70}
           loading="lazy"
         />
-      </div>
-      <div className="uk-card-body">
-        <p id="category" className="uk-text-uppercase">
-          {article.attributes.category.data.attributes.name}
-        </p>
-        <p id="title" className="uk-text-large">
+      </CardImageContainer>
+
+      <CardInformations>
+        <p id="title">
           {article.attributes.title}
         </p>
-      </div>
-    </div>
+        <p id="description">
+          {article.attributes.description}
+        </p>
+        {/* <p id="category">
+          {article.attributes.category.data.attributes.name}
+        </p> */}
+      </CardInformations>
+    </CardContainer>
   </Link>
 );
 

@@ -12,6 +12,7 @@ const {
     colors: {
       background: '#08070b',
       mediumBackground: '#13141c',
+      mediumBackgroundHover: '#1B1C24',
       gradient:
         'linear-gradient(90deg, #ffbe0b, #fb5607, #ff006e, #8257e5, #3a86ff );',
       highlight145: 'linear-gradient(145deg, #8257e5, #c1b);',
@@ -99,7 +100,8 @@ const { theme: lightTheme } = createStitches({
   theme: {
     colors: {
       background: '#FFFFFF',
-      mediumBackground: 'rgb(242, 243, 247)',
+      mediumBackground: '#F2F3F7',
+      mediumBackgroundHover: '#F9F9FB',
       gradient:
         'linear-gradient(90deg, #ffbe0b, #fb5607, #ff006e, #8257e5, #3a86ff );',
       highlight145: 'linear-gradient(145deg, #8257e5, #c1b);',

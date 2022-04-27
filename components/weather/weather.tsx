@@ -24,9 +24,9 @@ const API_WEATHER = `https://dataservice.accuweather.com/currentconditions/v1/${
 const fetcher = () => fetch(API_WEATHER).then((res) => res.json());
 
 export const WeatherConditions = () => {
-  const { data, error } = useSWR(API_WEATHER, fetcher, { refreshInterval: 20000 });
+  const { data, error } = useSWR(API_WEATHER, fetcher, { refreshInterval: 600000 });
 
-  if (error || !data) return <div>...</div>;
+  if (error || !data) return <div> </div>;
 
   const [weather] = data;
 
