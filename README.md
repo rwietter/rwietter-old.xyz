@@ -5,6 +5,9 @@
 - [x] Blog list
 - [ ] Blog Post
 - [ ] Portfolio
+- [ ] SEO
+- [ ] PWA
 - [ ] Arch Linux
 - [ ] About
+- [ ] i18n
 - [ ] Pagination
