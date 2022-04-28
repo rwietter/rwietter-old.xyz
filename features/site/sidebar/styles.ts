@@ -12,7 +12,7 @@ export const Container = styled('header', {
   zIndex: 4,
   textAlign: 'center',
   width: '100%',
-  transition: 'background 0.35s',
+  transition: '$transitonTheme, border 0.35s ease',
 
   '@bp5': {
     width: '13rem',

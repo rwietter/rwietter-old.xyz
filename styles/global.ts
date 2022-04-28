@@ -20,7 +20,7 @@ export const globalStyles = globalCss({
     lineHeight: '1.1',
   },
   p: {
-    maxWidth: '60ch',
-    marginInlineEnd: 'auto',
+    // maxWidth: '60ch',
+    // marginInlineEnd: 'auto',
   },
 });

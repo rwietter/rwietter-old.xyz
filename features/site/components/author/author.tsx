@@ -28,7 +28,6 @@ const Author: React.FC = () => {
         <p className="description">
           Software developer and student from the Brazil.
           {' '}
-          <strong>Welcome to my space!</strong>
         </p>
       </AuthorContainer>
     </AuthorLink>
