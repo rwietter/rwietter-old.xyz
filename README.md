@@ -10,4 +10,5 @@
 - [ ] Arch Linux
 - [ ] About
 - [ ] i18n
+- [ ] Loading
 - [ ] Pagination
