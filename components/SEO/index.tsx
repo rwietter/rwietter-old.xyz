@@ -67,6 +67,22 @@ export const NextSEO: FC<SEOProps> = (props) => {
         ],
         site_name: author,
       }}
+      additionalLinkTags={[
+        {
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap',
+          rel: 'stylesheet',
+        },
+        {
+          href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap',
+          rel: 'stylesheet',
+        },
+      ]}
+      additionalMetaTags={[
+        {
+          name: 'theme-color',
+          content: '#13141c',
+        },
+      ]}
       twitter={{
         handle: '@rwietter',
         site: 'https://dev.rwietter.xyz',

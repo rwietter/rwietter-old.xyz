@@ -14,8 +14,8 @@ import { RiTimer2Line } from 'react-icons/ri';
 import Prism from 'prismjs';
 import { useEffect } from 'react';
 import { ArticleFooter } from 'components/article-footer';
-import SEO from 'components/SEO';
 import * as CSS from 'styles/blog/article/styled';
+import { NextSEO } from '../../../components/SEO/index';
 
 require('prismjs/components/prism-typescript');
 require('prismjs/components/prism-javascript');
@@ -57,7 +57,7 @@ const ArticleItem = () => {
 
   return (
     <Layout>
-      <SEO
+      <NextSEO
         title={articles.attributes.title}
         description={articles.attributes.description}
         image={articles.attributes.image.data.attributes.url}

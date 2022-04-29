@@ -1,11 +1,11 @@
 import React from 'react';
 import { BlogLayout } from 'layouts/blog';
-import SEO from 'components/SEO';
 import Navbar from 'components/blog-navbar';
+import { NextSEO } from 'components/SEO';
 
 const Blog: React.FC = () => (
   <div>
-    <SEO
+    <NextSEO
       title="@rwietter"
       content="blog"
       url="https://dev.rwietter.xyz/blog"
