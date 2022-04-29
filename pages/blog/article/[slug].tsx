@@ -13,7 +13,7 @@ import Prism from 'prismjs';
 import { useEffect } from 'react';
 import { ArticleFooter } from 'components/article-footer';
 import SEO from 'components/SEO';
-import * as CSS from './_styled';
+import * as CSS from 'styles/blog/article/styled';
 
 require('prismjs/components/prism-typescript');
 require('prismjs/components/prism-javascript');
