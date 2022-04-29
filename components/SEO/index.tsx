@@ -18,7 +18,7 @@ const SEO: FC<SEOProps> = ({
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
     <meta property="og:type" content={content} />
-    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta property="og:image" content={image} />
   </Head>
 );
