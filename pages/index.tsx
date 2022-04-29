@@ -1,5 +1,5 @@
 import { FooterComponent } from 'components/footer';
-import SEO from 'components/SEO';
+import { NextSEO } from 'components/SEO';
 import { AuthorContent } from 'features/site/author-content';
 import { AuthorHeader } from 'features/site/author-header';
 import { LastPosts } from 'features/site/last-posts';
@@ -8,7 +8,7 @@ import { Layout } from 'layouts/content';
 
 const Home: NextPage = () => (
   <div>
-    <SEO
+    <NextSEO
       title="@rwietter"
       content="website"
       url="https://dev.rwietter.xyz"

@@ -1,6 +1,7 @@
 /* eslint-disable react/require-default-props */
 import Head from 'next/head';
 import { FC } from 'react';
+import { NextSeo } from 'next-seo';
 
 interface SEOProps {
   title: string;
@@ -15,6 +16,7 @@ const SEO: FC<SEOProps> = ({
 }) => (
   <Head>
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta httpEquiv="content-language" content="pt-BR" />
     <meta property="og:title" content={title} />
@@ -28,7 +30,50 @@ const SEO: FC<SEOProps> = ({
     <meta property="twitter:creator" content={author} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta name="twitter:site" content="@rwietter" />
   </Head>
 );
+
+export const NextSEO: FC<SEOProps> = (props) => {
+  const {
+    title, description, url, content = 'website', image, author = '@rwietter',
+  } = props;
+  return (
+    <NextSeo
+      title={title}
+      description={description}
+      canonical={`${url}`}
+      openGraph={{
+        url: `${url}`,
+        title,
+        description,
+        images: [
+          {
+            url: image,
+            width: 800,
+            height: 600,
+            alt: `Image of the ${content} ${title}`,
+            type: 'image/jpeg',
+          },
+          {
+            url: image,
+            width: 900,
+            height: 800,
+            alt: `Image of the ${content} ${title}`,
+            type: 'image/jpeg',
+          },
+          { url: 'https://res.cloudinary.com/ddwnioveu/image/upload/v1651191166/profile/wallhaven-dpo7wm_1366x768_mdztjw.png' },
+          { url: 'https://res.cloudinary.com/ddwnioveu/image/upload/v1651191166/profile/wallhaven-dpo7wm_1366x768_mdztjw.png' },
+        ],
+        site_name: author,
+      }}
+      twitter={{
+        handle: '@rwietter',
+        site: 'https://dev.rwietter.xyz',
+        cardType: 'summary_large_image',
+      }}
+    />
+  );
+};
 
 export default SEO;
