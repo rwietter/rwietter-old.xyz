@@ -38,8 +38,8 @@ export const getStaticProps: GetStaticProps = async () => {
     query: ARTICLES_QUERY,
   });
 
-  if (loading) return <div>Loading...</div>;
-  if (errors) return <div>Ops...</div>;
+  if (loading) return { props: { articles: null } };
+  if (errors) return { props: { articles: null } };
 
   return {
     props: {

@@ -23,6 +23,7 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
   const linkToSearchOnTwietter = `https://twitter.com/search?q=https://dev.rwietter.xyz${asPath}`;
   return (
     <ArticleFooterContainer>
+      <Separator />
       <NavHeader>
         <a href={tweetUrl} target="_blank" rel="noreferrer">
           <FiTwitter size={14} />&nbsp;Tweet this article
@@ -44,7 +45,7 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
               <a key={link.url} href={link.url} target="_blank" rel="noreferrer">{ link.icon }</a>
             ))}
           </span>
-          {author && <h4>Written by <strong>{ author }</strong></h4> }
+          {author && <h4>Written by <strong>{ author }</strong></h4>}
         </SocialContainer>
       </div>
     </ArticleFooterContainer>

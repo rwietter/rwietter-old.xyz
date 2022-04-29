@@ -6,7 +6,7 @@ const Query = ({ children, query, slug }: any) => {
     variables: { slug },
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return null;
   if (error) {
     return (
       <p>

@@ -7,9 +7,11 @@ export const ArticleFooterContainer = s('div', {
 
 export const NavHeader = s('nav', {
   display: 'flex',
-  paddingTop: '$2',
+  padding: '$2 0',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
+  flexDirection: 'column',
+  lineHeight: '2',
 
   a: {
     color: '$gray50',
@@ -17,7 +19,6 @@ export const NavHeader = s('nav', {
     transition: '$transitonTheme',
     display: 'flex',
     alignItems: 'center',
-    lineHeight: '1.5',
     borderBottom: '3px solid transparent',
 
     '&:hover': {
@@ -36,18 +37,21 @@ export const NavHeader = s('nav', {
       borderBottom: '3px solid $primary',
     },
   },
+
+  '@bp2': {
+    flexDirection: 'row',
+  },
 });
 
 export const Separator = s('div', {
   width: '100%',
   height: '3px',
-  margin: '$2 0',
   background: '$mediumBackgroundHover',
   transition: '$transitonTheme',
 });
 
 export const SocialContainer = s('div', {
-  paddingTop: '$2',
+  padding: '$4 0 $2 0',
   display: 'flex',
   justifyContent: 'space-between',
   flexWrap: 'wrap',

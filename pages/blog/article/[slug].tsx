@@ -8,25 +8,15 @@ import { Layout } from 'layouts/content';
 import Link from 'next/link';
 import { AiOutlineArrowLeft, AiOutlineCalendar } from 'react-icons/ai';
 import { RiTimer2Line } from 'react-icons/ri';
-import Prism from 'prismjs';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ArticleFooter } from 'components/article-footer';
 import * as CSS from 'styles/blog/article/styled';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ARTICLES_QUERY } from 'queries/articles/articles';
 import apolloClient from 'utils/apollo-client';
 import { getReadingTime } from 'utils/getTimeReading';
-import { NextSEO } from '../../../components/SEO/index';
-import { getLocaleDate } from '../../../utils/get-locale-date';
-
-require('prismjs/components/prism-typescript');
-require('prismjs/components/prism-javascript');
-require('prismjs/components/prism-jsx');
-require('prismjs/components/prism-tsx');
-require('prismjs/components/prism-css');
-require('prismjs/components/prism-rust');
-require('prismjs/components/prism-bash');
-require('prismjs/components/prism-json');
+import { NextSEO } from 'components/SEO/index';
+import { getLocaleDate } from 'utils/get-locale-date';
 
 interface ArticleItemProps {
   articles: any
@@ -35,22 +25,10 @@ interface ArticleItemProps {
 const ArticleItem: FC<ArticleItemProps> = ({ articles }) => {
   const { theme } = useThemeStore() as any;
 
-  useEffect(() => {
-    Prism.highlightAll();
-  });
-
-  useEffect(() => {
-    Prism.highlightAll();
-  }, [theme]);
-
   const router = useRouter() as unknown as { asPath: string };
-
-  if (!articles) return <div>Loading...</div>;
-
+  if (!articles) return null;
   const [article] = articles;
-
   const { readTime } = getReadingTime(article.attributes.content);
-
   const { localeDate: publishedAt } = getLocaleDate(article.attributes.publishedAt, 'pt-BR');
 
   return (
@@ -100,10 +78,6 @@ const ArticleItem: FC<ArticleItemProps> = ({ articles }) => {
             {article.attributes.content}
           </CSS.ArticleMarkdown>
         </CSS.ArticleMarkdownContainer>
-        {/* <div>
-          <p style={{ color: '#FFF' }}>{articles.attributes.author.data.attributes.name}</p>
-          <p style={{ color: '#FFF' }}>{articles.attributes.category.data.attributes.name}</p>
-        </div> */}
         <ArticleFooter
           author={article.attributes.author.data.attributes.name}
           name={article.attributes.title}
@@ -117,9 +91,13 @@ const ArticleItem: FC<ArticleItemProps> = ({ articles }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await apolloClient.query({ query: ARTICLES_QUERY });
 
+  if (!data) return { paths: [], fallback: true };
+
   const paths = data.articles.data.map((article: any) => ({
     params: { slug: article.attributes.slug },
   }));
+
+  if (!paths) return { paths: [], fallback: true };
 
   return {
     paths,
@@ -133,6 +111,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { data } = await apolloClient.query(
     { query: ARTICLE_QUERY, variables: { slug: params.slug } },
   );
+
+  if (!data) return { props: {} };
+
   return {
     props: {
       slug: params.slug,

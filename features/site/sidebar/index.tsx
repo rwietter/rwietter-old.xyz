@@ -10,9 +10,6 @@ const Sidebar: React.FC = () => (
       <Author />
       <SidebarSocialIcons />
     </div>
-    {/* <nav>
-      <Link href="/blog">Blog</Link>
-    </nav> */}
   </Container>
 );
 

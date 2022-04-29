@@ -19,7 +19,7 @@ export const ArticleHeader = s('div', {
 
 export const BackToOverview = s('span', {
   color: '$gray50',
-  paddingBottom: '$3',
+  paddingBottom: '$5',
   display: 'flex',
   cursor: 'pointer',
 
@@ -67,7 +67,7 @@ export const ArticleDescription = s('p', {
 export const ArticleMarkdownContainer = s('div', {
   margin: '0 auto',
   width: '100%',
-  paddingTop: '$7',
+  paddingTop: '$5',
 });
 
 export const ArticleMarkdown = s(ReactMarkdown, {
