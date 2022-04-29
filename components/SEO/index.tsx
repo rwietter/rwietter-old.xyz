@@ -76,6 +76,10 @@ export const NextSEO: FC<SEOProps> = (props) => {
           href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap',
           rel: 'stylesheet',
         },
+        {
+          href: 'https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;600;800&display=swap',
+          rel: 'stylesheet',
+        },
       ]}
       additionalMetaTags={[
         {

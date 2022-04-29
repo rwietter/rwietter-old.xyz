@@ -72,5 +72,7 @@ export const ArticleMarkdownContainer = s('div', {
 
 export const ArticleMarkdown = s(ReactMarkdown, {
   paddingTop: '$6',
-  fontFamily: 'Inter, sans-serif',
+  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+  lineHeight: '1.8',
+  fontFamily: 'Sora, sans-serif',
 });
