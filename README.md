@@ -3,7 +3,8 @@
 - [x] Homepage
 - [x] Theme
 - [x] Blog list
-- [ ] Blog Post
+- [x] Blog Post
+- [x] ISR
 - [ ] Portfolio
 - [ ] SEO
 - [ ] PWA
