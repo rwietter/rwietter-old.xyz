@@ -11,8 +11,7 @@ export const ManuBarWrapper = styled('aside', {
   padding: '0 0.3rem',
   position: 'fixed',
   width: '100%',
-  transition: '$transitonTheme',
-
+  transition: '$transitonTheme, border 0.35s ease',
   background: '$mediumBackground',
 
   '@bp5': {

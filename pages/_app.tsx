@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import apolloClient from 'utils/apollo-client';
 import { useThemeStore, ThemeStore } from 'store/switch-theme';
 import { applyTheme } from 'utils/apply-theme';
+import '../styles/syntax-nord.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);

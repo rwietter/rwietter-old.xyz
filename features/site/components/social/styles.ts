@@ -6,7 +6,7 @@ export const SocialContainer = styled('div', {
   alignItems: 'center',
   flexDirection: 'row',
   cursor: 'pointer',
-  paddingTop: '$2',
+  paddingTop: '$1',
 
   a: {
     color: '$gray50',
