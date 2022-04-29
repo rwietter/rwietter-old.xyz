@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-tabs */
 import { useRouter } from 'next/router';
-import { gql } from '@apollo/react-hooks';
-// import ARTICLE_QUERY from 'queries/article/article';
+import { useQuery } from '@apollo/react-hooks';
+import ARTICLE_QUERY from 'queries/article/article';
 import { useThemeStore } from 'store/switch-theme';
 import markdownLight from 'styles/github-markdown-css-light.module.css';
 import markdownDark from 'styles/github-markdown-css-dark.module.css';
@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 import { ArticleFooter } from 'components/article-footer';
 import SEO from 'components/SEO';
 import * as CSS from 'styles/blog/article/styled';
-import apolloClient from 'utils/apollo-client';
 
 require('prismjs/components/prism-typescript');
 require('prismjs/components/prism-javascript');
@@ -27,7 +26,7 @@ require('prismjs/components/prism-rust');
 require('prismjs/components/prism-bash');
 require('prismjs/components/prism-json');
 
-const ArticleItem = ({ data }: any) => {
+const ArticleItem = () => {
   const { theme } = useThemeStore() as any;
 
   useEffect(() => {
@@ -43,11 +42,11 @@ const ArticleItem = ({ data }: any) => {
 		asPath: string;
 	};
 
-  // const { data, loading, error } = useQuery(ARTICLE_QUERY, {
-  //   variables: { slug: router.query.slug },
-  // });
+  const { data, loading, error } = useQuery(ARTICLE_QUERY, {
+    variables: { slug: router.query.slug },
+  });
 
-  if (!data) return <div>Loading...</div>;
+  if (loading || error) return <div>Loading...</div>;
 
   const [articles] = data.articles.data;
 
@@ -115,54 +114,6 @@ const ArticleItem = ({ data }: any) => {
       </CSS.ArticleContainer>
     </Layout>
   );
-};
-
-export const getServerSideProps = async (props: any) => {
-  const { data } = await apolloClient.query({
-    query: gql`
-  		query Article($slug: String!) {
-  			articles(filters: { slug: { eq: $slug } }) {
-  				data {
-  					attributes {
-  						slug
-  						title
-  						content
-  						description
-  						author {
-  							data {
-  								attributes {
-  									name
-  								}
-  							}
-  						}
-  						publishedAt
-  						category {
-  							data {
-  								attributes {
-  									slug
-  									name
-  								}
-  							}
-  						}
-  						image {
-  							data {
-  								attributes {
-  									url
-  								}
-  							}
-  						}
-  					}
-  				}
-  			}
-  		}
-  	`,
-    variables: { slug: props.query.slug },
-  });
-  return {
-    props: {
-      data,
-    },
-  };
 };
 
 export default ArticleItem;
