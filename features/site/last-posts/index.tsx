@@ -1,7 +1,9 @@
-import { useQuery } from '@apollo/react-hooks';
+// import { useQuery } from '@apollo/react-hooks';
 import Image from 'next/image';
 import Link from 'next/link';
-import { LAST_ARTICLES_QUERY } from 'queries/articles/articles';
+import { LastArticles } from 'queries/article/article';
+// import { LAST_ARTICLES_QUERY } from 'queries/articles/articles';
+import { FC } from 'react';
 import {
   LastPostContainer,
   LastPostContainerContent,
@@ -12,9 +14,13 @@ import {
   LastPostToBlog,
 } from './styles';
 
-function LastPosts() {
-  const { data } = useQuery(LAST_ARTICLES_QUERY);
-  const posts = data?.articles?.data;
+interface LastPostsProps {
+  lastArticles: LastArticles;
+}
+
+const LastPosts: FC<LastPostsProps> = ({ lastArticles }) => {
+  // const { data } = useQuery(LAST_ARTICLES_QUERY);
+  const posts = lastArticles?.data;
 
   if (!posts) return null;
 
@@ -67,6 +73,6 @@ function LastPosts() {
       </LastPostToBlog>
     </LastPostContainerLink>
   );
-}
+};
 
 export { LastPosts };

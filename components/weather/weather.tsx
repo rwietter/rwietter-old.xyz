@@ -20,7 +20,6 @@ export interface WeatherProps {
 }
 
 const API_WEATHER = `https://dataservice.accuweather.com/currentconditions/v1/${process.env.ACCUWEATHER_CITY_ID}?apikey=${process.env.ACCUWEATHER_API_KEY}`;
-
 const fetcher = () => fetch(API_WEATHER).then((res) => res.json());
 
 export const WeatherConditions = () => {
