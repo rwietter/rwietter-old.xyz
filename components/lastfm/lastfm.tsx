@@ -1,31 +1,47 @@
-import useSWR from 'swr';
+/* eslint-disable no-tabs */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unused-prop-types */
 import { SpotifyIcon } from 'components/icons/Spotify';
 import Image from 'next/image';
+import { FC } from 'react';
 import { Playing, PlayingImage, PlayingArtist } from './styles';
 
-interface TrackProps {
-  artist: {
-    '#text': string;
-  },
-  image: {
-    size: string;
-    '#text': string;
-  }[]
-  name: string;
-  url: string;
+interface RecentTrackProps {
+	recenttracks: {
+		track: {
+			artist: {
+				'#text': string;
+			};
+			image: {
+				'size': string;
+				'#text': string;
+			}[];
+			name: string;
+			url: string;
+		}[];
+	};
 }
 
-const USERNAME = process.env.LASTFM_USERNAME!;
-const API_KEY = process.env.LASTFM_API_KEY!;
-const API_LAST_FM = `//ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`;
-const fetcher = () => fetch(API_LAST_FM).then((res) => res.json());
+interface TrackProps {
+	artist: {
+		'#text': string;
+	};
+	image: {
+		'size': string;
+		'#text': string;
+	}[];
+	name: string;
+	url: string;
+}
 
-export const LastFMTrack = () => {
-  const { data, error } = useSWR(API_LAST_FM, fetcher, { refreshInterval: 120000 });
+interface LastFmTrackProps {
+	lastFm: RecentTrackProps;
+}
 
-  if (error) return <div> </div>;
+export const LastFMTrack: FC<LastFmTrackProps> = ({ lastFm }) => {
+  if (!lastFm) return <div> </div>;
 
-  const track: TrackProps = data?.recenttracks?.track[0];
+  const track: TrackProps = lastFm.recenttracks.track[0];
 
   return (
     <Playing>

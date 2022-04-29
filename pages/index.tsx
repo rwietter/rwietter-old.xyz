@@ -13,9 +13,10 @@ import { LastArticles } from 'queries/article/article';
 
 interface HomeProps {
   lastArticles: LastArticles;
+  lastFm: any;
 }
 
-const Home: NextPage<HomeProps> = ({ lastArticles }) => (
+const Home: NextPage<HomeProps> = ({ lastArticles, lastFm }) => (
   <div>
     <NextSEO
       title="@rwietter"
@@ -26,27 +27,31 @@ const Home: NextPage<HomeProps> = ({ lastArticles }) => (
     />
     <Layout>
       <AuthorHeader />
-      <AuthorContent />
+      <AuthorContent lastFm={lastFm} />
       <LastPosts lastArticles={lastArticles} />
       <FooterComponent />
     </Layout>
   </div>
 );
 
-interface GetStaticTypes {
-  props: {
-    lastArticles: LastArticles;
-  }
-}
+const USERNAME = process.env.LASTFM_USERNAME!;
+const API_KEY = process.env.LASTFM_API_KEY!;
+const API_LAST_FM = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`;
+const fetcher = () => fetch(API_LAST_FM).then((res) => res.json());
 
-export const getStaticProps: GetStaticProps = async (): Promise<GetStaticTypes> => {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await apolloClient.query({
     query: LAST_ARTICLES_QUERY,
   });
+
+  const lastFm = await fetcher();
+
   return {
     props: {
       lastArticles: data.data.articles,
+      lastFm,
     },
+    revalidate: 300,
   };
 };
 
