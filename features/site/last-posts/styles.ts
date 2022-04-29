@@ -75,6 +75,7 @@ export const LastPostToBlog = styled('button', {
   borderRadius: '4px',
   background: '$secondary',
   transition: 'background 0.3s ease',
+  fontWeight: '600',
 
   '&:hover': {
     background: '$primary',
@@ -124,6 +125,7 @@ export const LastPostContainerContentCategory = styled('div', {
   padding: '0.2rem 0.6rem',
   borderRadius: '4px',
   transition: '$transitonTheme',
+  fontWeight: 700,
 
   variants: {
     category: {

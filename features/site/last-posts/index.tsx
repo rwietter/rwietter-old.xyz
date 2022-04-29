@@ -48,7 +48,7 @@ function LastPosts() {
             </LastPostContainerImage>
             <LastPostContainerContent>
               <div>
-                <h4 className="title">{post.attributes.title}</h4>
+                <h1 className="title">{post.attributes.title}</h1>
                 <p className="description">{post.attributes.description}</p>
               </div>
               <div>
