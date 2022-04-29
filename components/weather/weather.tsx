@@ -1,5 +1,5 @@
-import useSWR from 'swr';
 import { RiSunCloudyLine } from 'react-icons/ri';
+import { FC } from 'react';
 
 export interface WeatherProps {
   HasPrecipitation: boolean;
@@ -19,29 +19,28 @@ export interface WeatherProps {
   };
 }
 
-const API_WEATHER = `https://dataservice.accuweather.com/currentconditions/v1/${process.env.ACCUWEATHER_CITY_ID}?apikey=${process.env.ACCUWEATHER_API_KEY}`;
-const fetcher = () => fetch(API_WEATHER).then((res) => res.json());
+interface WeatherConditionsProps {
+  weather: any;
+}
 
-export const WeatherConditions = () => {
-  const { data, error } = useSWR(API_WEATHER, fetcher, { refreshInterval: 600000 });
+export const WeatherConditions: FC<WeatherConditionsProps> = ({ weather }) => {
+  if (weather) return <div> </div>;
 
-  if (error || !data) return <div> </div>;
-
-  const [weather] = data;
+  const [data]: [WeatherProps] = weather;
 
   return (
     <div>
-      {weather?.Temperature && (
+      {data?.Temperature && (
       <p>
         <RiSunCloudyLine size={18} />
         <span>Its currently &nbsp;</span>
         <strong>
-          {weather?.Temperature?.Metric?.Value}
+          {data?.Temperature?.Metric?.Value}
           {' '}
           °C &nbsp;
         </strong>
         <span>
-          {weather?.WeatherText && `( ${weather.WeatherText} )`}
+          {data?.WeatherText && `( ${data.WeatherText} )`}
           &nbsp;
         </span>
         <span>in Constantina.</span>

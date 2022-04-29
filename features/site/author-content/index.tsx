@@ -1,14 +1,19 @@
-import { LastFMTrack, LastFmTrackProps } from 'components/lastfm/lastfm';
+import { LastFMTrack, RecentTrackProps } from 'components/lastfm/lastfm';
 import { UpdatedDate } from 'components/update-date';
 import { WeatherConditions } from 'components/weather/weather';
 import { FC } from 'react';
 import { Container, CurrentlyInformations } from './styles';
 
-const AuthorContent: FC<LastFmTrackProps> = ({ lastFm }) => (
+export interface AuthorContentProps {
+  lastFm: RecentTrackProps;
+  weather: any;
+}
+
+const AuthorContent: FC<AuthorContentProps> = ({ lastFm, weather }) => (
   <Container>
     <CurrentlyInformations>
       <UpdatedDate />
-      <WeatherConditions />
+      <WeatherConditions weather={weather} />
     </CurrentlyInformations>
     <LastFMTrack lastFm={lastFm} />
   </Container>

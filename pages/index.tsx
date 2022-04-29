@@ -12,9 +12,10 @@ import { LastArticles } from 'queries/article/article';
 interface HomeProps {
   lastArticles: LastArticles;
   lastFm: any;
+  weather: any;
 }
 
-const Home: NextPage<HomeProps> = ({ lastArticles, lastFm }) => (
+const Home: NextPage<HomeProps> = ({ lastArticles, lastFm, weather }) => (
   <div>
     <NextSEO
       title="@rwietter"
@@ -25,7 +26,7 @@ const Home: NextPage<HomeProps> = ({ lastArticles, lastFm }) => (
     />
     <Layout>
       <AuthorHeader />
-      <AuthorContent lastFm={lastFm} />
+      <AuthorContent lastFm={lastFm} weather={weather} />
       <LastPosts lastArticles={lastArticles} />
       <FooterComponent />
     </Layout>
