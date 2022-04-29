@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-tabs */
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
 import ARTICLE_QUERY from 'queries/article/article';
 import { useThemeStore } from 'store/switch-theme';
 import markdownLight from 'styles/github-markdown-css-light.module.css';
@@ -9,13 +7,17 @@ import markdownDark from 'styles/github-markdown-css-dark.module.css';
 import { Layout } from 'layouts/content';
 import Link from 'next/link';
 import { AiOutlineArrowLeft, AiOutlineCalendar } from 'react-icons/ai';
-import useReadingTime from 'reading-time';
 import { RiTimer2Line } from 'react-icons/ri';
 import Prism from 'prismjs';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { ArticleFooter } from 'components/article-footer';
 import * as CSS from 'styles/blog/article/styled';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { ARTICLES_QUERY } from 'queries/articles/articles';
+import apolloClient from 'utils/apollo-client';
+import { getReadingTime } from 'utils/getTimeReading';
 import { NextSEO } from '../../../components/SEO/index';
+import { getLocaleDate } from '../../../utils/get-locale-date';
 
 require('prismjs/components/prism-typescript');
 require('prismjs/components/prism-javascript');
@@ -26,7 +28,11 @@ require('prismjs/components/prism-rust');
 require('prismjs/components/prism-bash');
 require('prismjs/components/prism-json');
 
-const ArticleItem = () => {
+interface ArticleItemProps {
+  articles: any
+}
+
+const ArticleItem: FC<ArticleItemProps> = ({ articles }) => {
   const { theme } = useThemeStore() as any;
 
   useEffect(() => {
@@ -37,30 +43,22 @@ const ArticleItem = () => {
     Prism.highlightAll();
   }, [theme]);
 
-  const router = useRouter() as unknown as {
-		query: { slug: string[] | string };
-		asPath: string;
-	};
+  const router = useRouter() as unknown as { asPath: string };
 
-  const { data, loading, error } = useQuery(ARTICLE_QUERY, {
-    variables: { slug: router.query.slug },
-  });
+  if (!articles) return <div>Loading...</div>;
 
-  if (loading || error) return <div>Loading...</div>;
+  const [article] = articles;
 
-  const [articles] = data.articles.data;
+  const { readTime } = getReadingTime(article.attributes.content);
 
-  const { text: readTime } = useReadingTime(articles.attributes.content);
-  const publishedAt = new Date(
-    articles.attributes.publishedAt,
-  ).toLocaleDateString('pt-BR');
+  const { localeDate: publishedAt } = getLocaleDate(article.attributes.publishedAt, 'pt-BR');
 
   return (
     <Layout>
       <NextSEO
-        title={articles.attributes.title}
-        description={articles.attributes.description}
-        image={articles.attributes.image.data.attributes.url}
+        title={article.attributes.title}
+        description={article.attributes.description}
+        image={article.attributes.image.data.attributes.url}
         url={`https://dev.rwietter.xyz${router.asPath}`}
         content="article"
       />
@@ -80,17 +78,17 @@ const ArticleItem = () => {
               <RiTimer2Line size={17} />
               {readTime}
             </CSS.DateTimeRead>
-            <CSS.ArticleTitle>{articles.attributes.title}</CSS.ArticleTitle>
+            <CSS.ArticleTitle>{article.attributes.title}</CSS.ArticleTitle>
             <CSS.ArticleDescription>
-              {articles.attributes.description}
+              {article.attributes.description}
             </CSS.ArticleDescription>
           </CSS.ArticleHeader>
           <CSS.ArticleImage
-            src={articles.attributes.image.data.attributes.url}
+            src={article.attributes.image.data.attributes.url}
             layout="responsive"
             width={100}
             height={50}
-            alt={`Image of the article ${articles.attributes.title}`}
+            alt={`Image of the article ${article.attributes.title}`}
             loading="lazy"
           />
 
@@ -99,7 +97,7 @@ const ArticleItem = () => {
 							theme === 'light' ? markdownDark['markdown-body'] : markdownLight['markdown-body']
 						}
           >
-            {articles.attributes.content}
+            {article.attributes.content}
           </CSS.ArticleMarkdown>
         </CSS.ArticleMarkdownContainer>
         {/* <div>
@@ -107,13 +105,41 @@ const ArticleItem = () => {
           <p style={{ color: '#FFF' }}>{articles.attributes.category.data.attributes.name}</p>
         </div> */}
         <ArticleFooter
-          author={articles.attributes.author.data.attributes.name}
-          name={articles.attributes.title}
-          category={articles.attributes.category.data.attributes.name}
+          author={article.attributes.author.data.attributes.name}
+          name={article.attributes.title}
+          category={article.attributes.category.data.attributes.name}
         />
       </CSS.ArticleContainer>
     </Layout>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await apolloClient.query({ query: ARTICLES_QUERY });
+
+  const paths = data.articles.data.map((article: any) => ({
+    params: { slug: article.attributes.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) return { props: {} };
+
+  const { data } = await apolloClient.query(
+    { query: ARTICLE_QUERY, variables: { slug: params.slug } },
+  );
+  return {
+    props: {
+      slug: params.slug,
+      articles: data.articles.data,
+    },
+    revalidate: 300,
+  };
 };
 
 export default ArticleItem;

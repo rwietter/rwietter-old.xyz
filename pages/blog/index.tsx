@@ -1,9 +1,17 @@
 import React from 'react';
 import { BlogLayout } from 'layouts/blog';
-import Navbar from 'components/blog-navbar';
 import { NextSEO } from 'components/SEO';
+import { Sidebar } from 'features/site/sidebar';
+import { LayoutCSS } from 'layouts/blog/styles';
+import Navbar from 'components/blog-navbar';
+import { Articles } from 'components/articles';
+import { MenuBar } from 'components/menu-bar';
+import FadeIn from 'react-fade-in';
+import { GetStaticProps } from 'next';
+import { ARTICLES_QUERY } from 'queries/articles/articles';
+import apolloClient from 'utils/apollo-client';
 
-const Blog: React.FC = () => (
+const Blog: React.FC<any> = ({ articles }) => (
   <div>
     <NextSEO
       title="@rwietter"
@@ -13,9 +21,32 @@ const Blog: React.FC = () => (
       image="https://res.cloudinary.com/ddwnioveu/image/upload/v1651191166/profile/wallhaven-dpo7wm_1366x768_mdztjw.png"
     />
     <BlogLayout>
-      <Navbar />
+      <Sidebar />
+      <LayoutCSS>
+        <FadeIn>
+          <Navbar />
+          <Articles articles={articles} />
+        </FadeIn>
+      </LayoutCSS>
+      <MenuBar />
     </BlogLayout>
   </div>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data, loading, errors } = await apolloClient.query({
+    query: ARTICLES_QUERY,
+  });
+
+  if (loading) return <div>Loading...</div>;
+  if (errors) return <div>Ops...</div>;
+
+  return {
+    props: {
+      articles: data.articles.data,
+    },
+    revalidate: 300,
+  };
+};
 
 export default Blog;
