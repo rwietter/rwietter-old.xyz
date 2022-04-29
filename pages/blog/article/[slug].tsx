@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-tabs */
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
-import ARTICLE_QUERY from 'queries/article/article';
+import { gql } from '@apollo/react-hooks';
+// import ARTICLE_QUERY from 'queries/article/article';
 import { useThemeStore } from 'store/switch-theme';
 import markdownLight from 'styles/github-markdown-css-light.module.css';
 import markdownDark from 'styles/github-markdown-css-dark.module.css';
@@ -14,6 +16,7 @@ import { useEffect } from 'react';
 import { ArticleFooter } from 'components/article-footer';
 import SEO from 'components/SEO';
 import * as CSS from 'styles/blog/article/styled';
+import apolloClient from 'utils/apollo-client';
 
 require('prismjs/components/prism-typescript');
 require('prismjs/components/prism-javascript');
@@ -24,7 +27,7 @@ require('prismjs/components/prism-rust');
 require('prismjs/components/prism-bash');
 require('prismjs/components/prism-json');
 
-const ArticleItem = () => {
+const ArticleItem = ({ data }: any) => {
   const { theme } = useThemeStore() as any;
 
   useEffect(() => {
@@ -36,20 +39,22 @@ const ArticleItem = () => {
   }, [theme]);
 
   const router = useRouter() as unknown as {
-    query: { slug: string[] | string };
-    asPath: string;
-  };
+		query: { slug: string[] | string };
+		asPath: string;
+	};
 
-  const { data, loading, error } = useQuery(ARTICLE_QUERY, {
-    variables: { slug: router.query.slug },
-  });
+  // const { data, loading, error } = useQuery(ARTICLE_QUERY, {
+  //   variables: { slug: router.query.slug },
+  // });
 
-  if (error || loading) return <div>Loading...</div>;
+  if (!data) return <div>Loading...</div>;
 
   const [articles] = data.articles.data;
 
   const { text: readTime } = useReadingTime(articles.attributes.content);
-  const publishedAt = new Date(articles.attributes.publishedAt).toLocaleDateString('pt-BR');
+  const publishedAt = new Date(
+    articles.attributes.publishedAt,
+  ).toLocaleDateString('pt-BR');
 
   return (
     <Layout>
@@ -72,12 +77,14 @@ const ArticleItem = () => {
             <CSS.DateTimeRead>
               <AiOutlineCalendar size={17} />
               {publishedAt}
-              &nbsp;|&nbsp;
+							&nbsp;|&nbsp;
               <RiTimer2Line size={17} />
               {readTime}
             </CSS.DateTimeRead>
             <CSS.ArticleTitle>{articles.attributes.title}</CSS.ArticleTitle>
-            <CSS.ArticleDescription>{articles.attributes.description}</CSS.ArticleDescription>
+            <CSS.ArticleDescription>
+              {articles.attributes.description}
+            </CSS.ArticleDescription>
           </CSS.ArticleHeader>
           <CSS.ArticleImage
             src={articles.attributes.image.data.attributes.url}
@@ -89,7 +96,9 @@ const ArticleItem = () => {
           />
 
           <CSS.ArticleMarkdown
-            className={theme === 'light' ? markdownDark['markdown-body'] : markdownLight['markdown-body']}
+            className={
+							theme === 'light' ? markdownDark['markdown-body'] : markdownLight['markdown-body']
+						}
           >
             {articles.attributes.content}
           </CSS.ArticleMarkdown>
@@ -106,6 +115,54 @@ const ArticleItem = () => {
       </CSS.ArticleContainer>
     </Layout>
   );
+};
+
+export const getServerSideProps = async (props: any) => {
+  const { data } = await apolloClient.query({
+    query: gql`
+  		query Article($slug: String!) {
+  			articles(filters: { slug: { eq: $slug } }) {
+  				data {
+  					attributes {
+  						slug
+  						title
+  						content
+  						description
+  						author {
+  							data {
+  								attributes {
+  									name
+  								}
+  							}
+  						}
+  						publishedAt
+  						category {
+  							data {
+  								attributes {
+  									slug
+  									name
+  								}
+  							}
+  						}
+  						image {
+  							data {
+  								attributes {
+  									url
+  								}
+  							}
+  						}
+  					}
+  				}
+  			}
+  		}
+  	`,
+    variables: { slug: props.query.slug },
+  });
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 export default ArticleItem;
