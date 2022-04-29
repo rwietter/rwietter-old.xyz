@@ -38,4 +38,32 @@ const ARTICLE_QUERY = gql`
   }
 `;
 
+export interface LastArticles {
+  data: [
+    {
+      attributes: {
+        slug: string;
+        title: string;
+        description: string;
+        updateAt: string;
+        category: {
+          data: {
+            attributes: {
+              name: string;
+              slug: string;
+            }
+          }
+        }
+        image: {
+          data: {
+            attributes: {
+              url: string;
+            }
+          }
+        }
+      }
+    }
+  ];
+}
+
 export default ARTICLE_QUERY;

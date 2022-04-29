@@ -12,3 +12,9 @@
 - [ ] i18n
 - [ ] Loading
 - [ ] Pagination
+
+```bash
+# Inspiration
+- https://www.adeolaadeoti.xyz/#
+- https://kentcdodds.com/blog
+```
