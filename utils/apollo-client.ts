@@ -12,6 +12,11 @@ const link = new HttpLink({
 const apolloClient = new ApolloClient({
   cache,
   link,
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache',
+    },
+  },
 });
 
 export default apolloClient;
